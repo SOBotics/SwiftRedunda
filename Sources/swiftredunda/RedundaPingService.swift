@@ -19,7 +19,7 @@ public class RedundaPingService {
         self.client = RedundaClient(key: key, version: version)
     }
     
-    public func startPinging(timeInterval: Double) {
+    public func startPinging(timeInterval: Double = 30.0) {
         #if available
             var _ = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
                 self.ping()
