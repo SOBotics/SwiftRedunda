@@ -1,3 +1,3 @@
-# swiftredunda
+# SwiftRedunda
 
-A description of this package.
+SwiftRedunda is a library to ping Redunda.
