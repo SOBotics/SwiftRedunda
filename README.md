@@ -1,5 +1,7 @@
 # SwiftRedunda
 
+[![Build Status](https://travis-ci.org/SOBotics/SwiftRedunda.svg?branch=master)](https://travis-ci.org/SOBotics/SwiftRedunda)
+
 SwiftRedunda is a library to ping Redunda.
 
 ### Installation:

@@ -16,7 +16,8 @@ let package = Package(
     targets: [
         .target(
             name: "SwiftRedunda",
-            dependencies: []),
+            dependencies: [],
+            path: "Sources"),
         .testTarget(
             name: "swiftredundaTests",
             dependencies: ["SwiftRedunda"]),
