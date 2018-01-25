@@ -1,11 +1,19 @@
-os:
-  - linux
-  - osx
+os: linux
 language: generic
 sudo: required
 dist: trusty
-osx_image: xcode9.2
-install:
-  - eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
+
+env:
+  - SWIFT_VERSION="4.0.3"
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq clang libicu-dev
+  - wget -q -O - https://swift.org/keys/all-keys.asc | gpg --import -
+  - gpg --keyserver hkp://pool.sks-keyservers.net --refresh-keys Swift
+  - https://swift.org/builds/swift-${SWIFT_VERSION}-release/ubuntu1404/swift-${SWIFT_VERSION}-RELEASE/swift-${SWIFT_VERSION}-RELEASE-ubuntu14.04.tar.gz
+  - tar xzf swift-${SWIFT_VERSION}-RELEASE-ubuntu14.04.tar.gz
+  - export PATH="${PWD}/swift-${SWIFT_VERSION}-RELEASE-ubuntu14.04/usr/bin:${PATH}"
+
 script:
   - swift build
