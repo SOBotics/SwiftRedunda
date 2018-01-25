@@ -33,13 +33,23 @@ let pingService = RedundaPingService(key: "YOUR_KEY_HERE", version: "1.0") // re
 pingService.startPinging()
 ```
 
-Before posting chat messages, remeber to see if you should be in standby mode first!
+Before posting chat messages, remember to see if you should be in standby mode first!
 
 ```swift
 if !pingService.shouldStandby {
     // post messages
 }
 ```
+
+You should also use a class which conforms to the protocol `RedundaPingServiceDelegate` to receive errors. Set the delegate of you `RedundaPingService` using the following:
+
+```swift
+pingService.delegate = PingServiceDelegate
+```
+
+where `PingServiceDelegate` conforms to `RedundaPingServiceDelegate`.
+
+You can set the service to debug mode with `pingService.debug = true`. If this value is true, Redunda won't be pinged.
 
 ### Report bugs
 

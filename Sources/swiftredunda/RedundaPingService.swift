@@ -4,12 +4,22 @@ public class RedundaPingService {
     public var key: String
     public var version: String?
     public var delegate: RedundaPingServiceDelegate?
+    public var debug = false {
+        didSet {
+            if debug {
+                self.stopPinging()
+            } else if let _ = self.pingTimer {
+                self.startPinging()
+            }
+        }
+    }
     fileprivate let client: RedundaClient
+    fileprivate var pingTimer: Timer?
     fileprivate var location = ""
     fileprivate var eventCount = 0
     fileprivate var standby = false {
         didSet {
-            delegate?.statusChanged(newStatus: standby)
+            self.delegate?.statusChanged(newStatus: standby)
         }
     }
     
@@ -21,14 +31,19 @@ public class RedundaPingService {
     
     public func startPinging(timeInterval: Double = 30.0) {
         #if available
-            var _ = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
+            self.pingTimer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
                 self.ping()
             }
         #endif
     }
     
+    public func stopPinging() {
+        self.pingTimer?.invalidate()
+        self.pingTimer = nil
+    }
+    
     public func ping() {
-        client.ping { res, err in
+        self.client.ping { res, err in
             if let err = err {
                 self.delegate?.handle(error: err)
             }
@@ -42,15 +57,15 @@ public class RedundaPingService {
     }
     
     public func shouldStandby() -> Bool {
-        return standby
+        return self.standby
     }
     
     public func getLocation() -> String {
-        return location
+        return self.location
     }
     
     public func getEventCount() -> Int {
-        return eventCount
+        return self.eventCount
     }
 }
 
