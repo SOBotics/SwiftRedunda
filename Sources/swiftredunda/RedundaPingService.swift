@@ -1,4 +1,7 @@
 import Foundation
+#if os(Linux)
+    import GLibc
+#endif
 
 public class RedundaPingService {
     public var key: String
@@ -30,11 +33,14 @@ public class RedundaPingService {
     }
     
     public func startPinging(timeInterval: Double = 30.0) {
-        #if available
-            self.pingTimer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
-                self.ping()
+        if #available(OSX 10.12, *) {
+            let t = Thread() {
+                sleep(UInt32(timeInterval))
             }
-        #endif
+            t.start()
+        } else {
+            fatalError("Pinging can't start because Thread is unavailable!")
+        }
     }
     
     public func stopPinging() {
