@@ -32,14 +32,13 @@ public class RedundaPingService {
         self.client = RedundaClient(key: key, version: version)
     }
     
-    public func startPinging(timeInterval: Double = 30.0) {
-        if #available(OSX 10.12, *) {
-            let t = Thread() {
+    public func startPinging(timeInterval: Int = 30) {
+        let queue = DispatchQueue(label: "redunda_ping_service", attributes: .concurrent)
+        queue.async {
+            while true {
+                self.ping()
                 sleep(UInt32(timeInterval))
             }
-            t.start()
-        } else {
-            fatalError("Pinging can't start because Thread is unavailable!")
         }
     }
     
