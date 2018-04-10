@@ -1,7 +1,4 @@
 import Foundation
-#if os(Linux)
-    import GLibc
-#endif
 
 public class RedundaPingService {
     public var key: String
