@@ -20,9 +20,13 @@ public class RedundaPingService {
     fileprivate var pingTimer: Timer?
     fileprivate var location = ""
     fileprivate var eventCount = 0
+    fileprivate var _standby = false
     fileprivate var standby = false {
         didSet {
-            self.delegate?.statusChanged(newStatus: standby)
+            if self._standby != self.standby {
+                self.delegate?.statusChanged(newStatus: standby)
+                self._standby = self.standby
+            }
         }
     }
     
