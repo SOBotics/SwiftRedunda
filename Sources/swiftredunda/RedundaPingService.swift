@@ -16,7 +16,7 @@ public class RedundaPingService {
     }
     fileprivate let client: RedundaClient
     fileprivate var pingTimer: Timer?
-    fileprivate var location = ""
+    fileprivate var location = "undefined location"
     fileprivate var eventCount = 0
     fileprivate var _standby = false
     fileprivate var standby = false {
@@ -35,6 +35,9 @@ public class RedundaPingService {
     }
     
     public func startPinging(timeInterval: Int = 30) {
+        if self.debug {
+            return
+        }
         let queue = DispatchQueue(label: "redunda_ping_service", attributes: .concurrent)
         queue.async {
             while true {
