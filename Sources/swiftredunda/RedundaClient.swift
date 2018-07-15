@@ -17,7 +17,7 @@ public class RedundaClient {
     
     public func ping(key: String, version: String?, callback: @escaping (RedundaPingResponse?, Error?) -> ()) {
         let url = URL(string: "https://redunda.sobotics.org/status.json")!
-        let params = version != nil ? ["key": key]: ["key": key, "version": version!]
+        let params = version == nil ? ["key": key]: ["key": key, "version": version!]
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
         req.setValue("Application/json", forHTTPHeaderField: "Content-Type")
